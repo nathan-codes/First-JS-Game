@@ -3,14 +3,16 @@ const blueCube = $("#blue");
 const yellowCube = $("#yellow");
 const greenCube = $("#green");
 const redCube = $("#red");
+const startButton = $(".start-btn");
 
 
 //Game Audios
-const blueCubeAudio = new Audio("./sounds/blue.mp3");
-const redCubeAudio = new Audio("./sounds/red.mp3");
-const yellowCubeAudio = new Audio("./sounds/yellow.mp3");
-const greenCubeAudio = new Audio("./sounds/green.mp3");
+const blueCubeAudio = new Audio("./sounds/You.mp3");
+const redCubeAudio = new Audio("./sounds/Never.mp3");
+const yellowCubeAudio = new Audio("./sounds/See.mp3");
+const greenCubeAudio = new Audio("./sounds/Anything.mp3");
 const gameOverAudio = new Audio("./sounds/wrong.mp3");
+const startGameAudio = new Audio("./sounds/Full.mp3");
 
 
 const originalColors = ["red", "blue", "yellow", "green"];
@@ -27,14 +29,26 @@ let level = 0;
 
 // Starting the Game based on Any key that is pressed.
 $(document).keypress(function () {
+
     $("h1").text("Level " + level);
     newSequence();
 });
 
 $("#level-title2").on("click", function () {
+   
     $("h1").text("Level " + level);
-    newSequence();
+    startGameAudio.play();
+    startButton.addClass("display");
+    startButton.removeClass("no-display");
+    
 });
+
+
+
+$(".start-btn").on("click", function () {
+    startButton.addClass("no-display");
+    newSequence();
+})
 
 
 
@@ -45,6 +59,8 @@ $(".btn").on("click", function (event) {
     checkAnswer(userSelectedColors.length - 1);
 
 })
+
+
 
 
 
@@ -85,17 +101,32 @@ function checkAnswer(currentlevel) {
 
 function newSequence() {
 
+
+
+    // if (userSelectedColors.length === 0) {
+    //     startGameAudio.play();
+    // }
+
+
+
+
+
     userSelectedColors = [];
 
     randomNumber = Math.floor(Math.random() * 4);
+
     let randomColor = originalColors[randomNumber];
 
     $("#" + randomColor).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 
-    playSound(randomColor);
+    
+   
+        playSound(randomColor);
 
-    //Storing the new pattern 
-    newPattern.push(randomColor);
+        //Storing the new pattern 
+        newPattern.push(randomColor);  
+    
+
 
 
     //Increase level by 1 each time 
@@ -173,4 +204,5 @@ if (window.innerWidth < 400) {
 }
 
 
-// Final site 
+// Final site
+
